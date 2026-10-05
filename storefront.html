@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tan's Website</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="storefront.html">Tan's Website</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" aria-current="page" href="storefront.html">Home</a>
+                <a class="nav-link" href="#about">About Us</a>
+                <a class="nav-link" href="#images">Images</a>
+                <a class="nav-link" href="#contact">Contact</a>
+                <a class="nav-link" href="signup.html">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="container mt-4" id="about">
+        <div class="p-5 bg-light rounded-3 hero-panel">
+            <h1>Welcome to My Website</h1>
+            <p class="lead mb-0">Here are some of my hobbies!!</p>
+        </div>
+    </section>
+
+    <section class="container my-5" id="images">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="hobby-card h-100">
+                    <h2>Cars</h2>
+                    <p>I like cars and learning about different models.</p>
+                    <img src="MCD.jpg" class="img-fluid" alt="Silver sports car">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="hobby-card h-100">
+                    <h2>Gym</h2>
+                    <p>I enjoy going to the gym and working out.</p>
+                    <img src="GYM.jpeg" class="img-fluid" alt="Gym with weights and workout equipment">
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="hobby-card h-100">
+                    <h2>Video Games</h2>
+                    <p>I enjoy playing video games in my free time.</p>
+                    <img src="VID.jpg" class="img-fluid" alt="Two people playing video games with controllers">
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer id="contact" class="bg-dark text-white text-center p-3">
+    <p class="mb-0">&copy; 2026 Tan. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

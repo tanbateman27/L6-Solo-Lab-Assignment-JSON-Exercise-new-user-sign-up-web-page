@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Signup | Tan's Website</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="storefront.html">Tan's Website</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="storefront.html">Home</a>
+                <a class="nav-link" href="storefront.html#about">About Us</a>
+                <a class="nav-link" href="storefront.html#images">Images</a>
+                <a class="nav-link" href="storefront.html#contact">Contact</a>
+                <a class="nav-link active" aria-current="page" href="signup.html">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm signup-card">
+                <div class="card-body p-4 p-md-5">
+                    <h1 class="mb-2">New User Sign Up</h1>
+                    <p class="text-secondary mb-4">
+                        Complete the form below. When you submit valid information, the form values will be displayed as a JSON document.
+                    </p>
+
+                    <form id="signupForm" novalidate>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                   placeholder="hello@world.com" autocomplete="email" required>
+                            <div id="emailError" class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username"
+                                   placeholder="world123" autocomplete="username" required>
+                            <div id="usernameError" class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmUsername" class="form-label">Confirm Username:</label>
+                            <input type="text" class="form-control" id="confirmUsername" name="confirmUsername"
+                                   placeholder="world123" required>
+                            <div id="confirmUsernameError" class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="Enter password" autocomplete="new-password" required>
+                            <div id="passwordError" class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                   placeholder="Confirm password" autocomplete="new-password" required>
+                            <div id="confirmPasswordError" class="invalid-feedback"></div>
+                        </div>
+
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                            <button type="reset" class="btn btn-secondary">Clear</button>
+                        </div>
+                    </form>
+
+                    <section id="jsonSection" class="mt-4 d-none" aria-live="polite">
+                        <h2 class="h4">JSON Shopper Document</h2>
+                        <pre id="jsonOutput" class="json-output mb-0"></pre>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer id="contact" class="bg-dark text-white text-center p-3">
+    <p class="mb-0">&copy; 2026 Tan. All Rights Reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const signupForm = document.getElementById("signupForm");
+    const jsonSection = document.getElementById("jsonSection");
+    const jsonOutput = document.getElementById("jsonOutput");
+
+    const fields = {
+        email: document.getElementById("email"),
+        username: document.getElementById("username"),
+        confirmUsername: document.getElementById("confirmUsername"),
+        password: document.getElementById("password"),
+        confirmPassword: document.getElementById("confirmPassword")
+    };
+
+    function setFieldState(field, message = "") {
+        const error = document.getElementById(field.id + "Error");
+        const isValid = message === "";
+
+        field.classList.toggle("is-invalid", !isValid);
+        field.classList.toggle("is-valid", isValid && field.value.trim() !== "");
+        error.textContent = message;
+
+        return isValid;
+    }
+
+    function validateField(field) {
+        const value = field.value.trim();
+
+        if (value === "") {
+            return setFieldState(field, "Field is required.");
+        }
+
+        if (field.id === "email") {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(value)) {
+                return setFieldState(field, "Please enter a valid email address.");
+            }
+        }
+
+        if (field.id === "confirmUsername" && value !== fields.username.value.trim()) {
+            return setFieldState(field, "Usernames do not match.");
+        }
+
+        if (field.id === "confirmPassword" && value !== fields.password.value) {
+            return setFieldState(field, "Passwords do not match.");
+        }
+
+        return setFieldState(field);
+    }
+
+    Object.values(fields).forEach((field) => {
+        field.addEventListener("blur", () => validateField(field));
+        field.addEventListener("input", () => {
+            if (field.classList.contains("is-invalid") || field.classList.contains("is-valid")) {
+                validateField(field);
+            }
+        });
+    });
+
+    signupForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const allValid = Object.values(fields)
+            .map((field) => validateField(field))
+            .every(Boolean);
+
+        if (!allValid) {
+            jsonSection.classList.add("d-none");
+            return;
+        }
+
+        const shopperDocument = {
+            email: fields.email.value.trim(),
+            username: fields.username.value.trim(),
+            confirmUsername: fields.confirmUsername.value.trim(),
+            password: fields.password.value,
+            confirmPassword: fields.confirmPassword.value
+        };
+
+        jsonOutput.textContent = JSON.stringify(shopperDocument, null, 2);
+        jsonSection.classList.remove("d-none");
+    });
+
+    signupForm.addEventListener("reset", function () {
+        window.setTimeout(() => {
+            Object.values(fields).forEach((field) => {
+                field.classList.remove("is-valid", "is-invalid");
+                document.getElementById(field.id + "Error").textContent = "";
+            });
+            jsonOutput.textContent = "";
+            jsonSection.classList.add("d-none");
+        }, 0);
+    });
+</script>
+</body>
+</html>
